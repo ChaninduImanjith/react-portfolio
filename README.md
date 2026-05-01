@@ -2,7 +2,6 @@
 
 [![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-8-purple?logo=vite)](https://vitejs.dev/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A high-performance, modern portfolio built with **React 19** and **Vite**, featuring interactive AI elements, 3D visualizations and a sleek, premium design.
 
