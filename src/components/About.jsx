@@ -26,35 +26,52 @@ export default function About() {
 
     container.innerHTML = '';
 
-    const options = {
-      radius: 220,
-      maxSpeed: 'fast',
-      initSpeed: 'normal',
-      direction: 135,
-      keep: true
+    const updateCloud = () => {
+      container.innerHTML = '';
+      const width = window.innerWidth;
+      const radius = width < 480 ? 140 : width < 768 ? 180 : 220;
+      
+      const options = {
+        radius: radius,
+        maxSpeed: 'fast',
+        initSpeed: 'normal',
+        direction: 135,
+        keep: true
+      };
+
+      const tc = TagCloud(container, toolSkills, options);
+
+      const colors = [
+        '#0ea5e9', // Sky/Cyan
+        '#8b5cf6', // Violet
+        '#38bdf8', // Light Blue
+        '#c084fc', // Light Purple
+        '#94a3b8', // Muted Slate
+        '#f8fafc', // White
+        '#0284c7', // Deep Blue
+      ];
+      
+      const items = container.querySelectorAll('.tagcloud--item');
+      items.forEach((item, index) => {
+        item.style.color = colors[index % colors.length];
+        item.style.fontWeight = '600';
+      });
+
+      return tc;
     };
 
-    const tc = TagCloud(container, toolSkills, options);
+    let tc = updateCloud();
 
-    // Apply professional colors to TagCloud items
-    const colors = [
-      '#0ea5e9', // Sky/Cyan
-      '#8b5cf6', // Violet
-      '#38bdf8', // Light Blue
-      '#c084fc', // Light Purple
-      '#94a3b8', // Muted Slate
-      '#f8fafc', // White
-      '#0284c7', // Deep Blue
-    ];
-    
-    const items = container.querySelectorAll('.tagcloud--item');
-    items.forEach((item, index) => {
-      item.style.color = colors[index % colors.length];
-      item.style.fontWeight = '600';
-    });
+    const handleResize = () => {
+      if (tc) tc.destroy();
+      tc = updateCloud();
+    };
+
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      tc.destroy();
+      window.removeEventListener('resize', handleResize);
+      if (tc) tc.destroy();
     };
   }, []);
 
@@ -100,8 +117,8 @@ export default function About() {
             <p style={{ textAlign: 'center', fontSize: '0.85rem', color: 'var(--text-color)', opacity: 0.7, marginBottom: '1rem' }}>
               Drag to rotate • Hover for proficiency
             </p>
-            <div className="skills-cloud-3d" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '450px', cursor: 'grab' }}>
-              <span ref={cloudRef} className="tagcloud" style={{ fontFamily: 'inherit', fontSize: '1.2rem' }}></span>
+            <div className="skills-cloud-3d" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'clamp(300px, 50vh, 450px)', cursor: 'grab' }}>
+              <span ref={cloudRef} className="tagcloud" style={{ fontFamily: 'inherit', fontSize: 'clamp(0.9rem, 3vw, 1.2rem)' }}></span>
             </div>
           </div>
         </div>
