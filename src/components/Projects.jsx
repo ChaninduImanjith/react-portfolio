@@ -64,8 +64,20 @@ function ProjectCard({ project }) {
       aria-label={project.title}
     >
       {/* Card visual header */}
-      <div className="project-img project-img--placeholder" style={{ background: gradient }}>
-        <span className="project-placeholder-emoji" aria-hidden="true">{emoji}</span>
+      <div
+        className="project-img"
+        style={!project.image ? { background: gradient } : undefined}
+      >
+        {project.image ? (
+          <img
+            src={project.image}
+            alt={`${project.title} screenshot`}
+            className="project-preview-img"
+            loading="lazy"
+          />
+        ) : (
+          <span className="project-placeholder-emoji" aria-hidden="true">{emoji}</span>
+        )}
 
         {/* Featured badge */}
         {project.featured && (
